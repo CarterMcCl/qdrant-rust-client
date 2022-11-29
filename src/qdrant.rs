@@ -69,47 +69,47 @@ pub struct OptimizerStatus {
 pub struct HnswConfigDiff {
     ///
     ///Number of edges per node in the index graph. Larger the value - more accurate the search, more space required.
-    #[prost(uint64, optional, tag="1")]
-    pub m: ::core::option::Option<u64>,
+    #[prost(uint64, tag="1")]
+    pub m: u64,
     ///
     ///Number of neighbours to consider during the index building. Larger the value - more accurate the search, more time required to build index.
-    #[prost(uint64, optional, tag="2")]
-    pub ef_construct: ::core::option::Option<u64>,
+    #[prost(uint64, tag="2")]
+    pub ef_construct: u64,
     ///
     ///Minimal size (in KiloBytes) of vectors for additional payload-based indexing.
     ///If payload chunk is smaller than `full_scan_threshold` additional indexing won't be used -
     ///in this case full-scan search should be preferred by query planner and additional indexing is not required.
     ///Note: 1Kb = 1 vector of size 256
-    #[prost(uint64, optional, tag="3")]
-    pub full_scan_threshold: ::core::option::Option<u64>,
+    #[prost(uint64, tag="3")]
+    pub full_scan_threshold: u64,
     ///
     ///Number of parallel threads used for background index building. If 0 - auto selection.
-    #[prost(uint64, optional, tag="4")]
-    pub max_indexing_threads: ::core::option::Option<u64>,
+    #[prost(uint64, tag="4")]
+    pub max_indexing_threads: u64,
     ///
     ///Store HNSW index on disk. If set to false, index will be stored in RAM.
-    #[prost(bool, optional, tag="5")]
-    pub on_disk: ::core::option::Option<bool>,
+    #[prost(bool, tag="5")]
+    pub on_disk: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WalConfigDiff {
     /// Size of a single WAL block file
-    #[prost(uint64, optional, tag="1")]
-    pub wal_capacity_mb: ::core::option::Option<u64>,
+    #[prost(uint64, tag="1")]
+    pub wal_capacity_mb: u64,
     /// Number of segments to create in advance
-    #[prost(uint64, optional, tag="2")]
-    pub wal_segments_ahead: ::core::option::Option<u64>,
+    #[prost(uint64, tag="2")]
+    pub wal_segments_ahead: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OptimizersConfigDiff {
     ///
     ///The minimal fraction of deleted vectors in a segment, required to perform segment optimization
-    #[prost(double, optional, tag="1")]
-    pub deleted_threshold: ::core::option::Option<f64>,
+    #[prost(double, tag="1")]
+    pub deleted_threshold: f64,
     ///
     ///The minimal number of vectors in a segment, required to perform segment optimization
-    #[prost(uint64, optional, tag="2")]
-    pub vacuum_min_vector_number: ::core::option::Option<u64>,
+    #[prost(uint64, tag="2")]
+    pub vacuum_min_vector_number: u64,
     ///
     ///Target amount of segments optimizer will try to keep.
     ///Real amount of segments may vary depending on multiple parameters:
@@ -119,8 +119,8 @@ pub struct OptimizersConfigDiff {
     ///
     ///It is recommended to select default number of segments as a factor of the number of search threads,
     ///so that each segment would be handled evenly by one of the threads.
-    #[prost(uint64, optional, tag="3")]
-    pub default_segment_number: ::core::option::Option<u64>,
+    #[prost(uint64, tag="3")]
+    pub default_segment_number: u64,
     ///
     ///Do not create segments larger this size (in KiloBytes).
     ///Large segments might require disproportionately long indexation times,
@@ -129,29 +129,29 @@ pub struct OptimizersConfigDiff {
     ///If indexation speed have more priority for your - make this parameter lower.
     ///If search speed is more important - make this parameter higher.
     ///Note: 1Kb = 1 vector of size 256
-    #[prost(uint64, optional, tag="4")]
-    pub max_segment_size: ::core::option::Option<u64>,
+    #[prost(uint64, tag="4")]
+    pub max_segment_size: u64,
     ///
     ///Maximum size (in KiloBytes) of vectors to store in-memory per segment.
     ///Segments larger than this threshold will be stored as read-only memmaped file.
     ///To enable memmap storage, lower the threshold
     ///Note: 1Kb = 1 vector of size 256
-    #[prost(uint64, optional, tag="5")]
-    pub memmap_threshold: ::core::option::Option<u64>,
+    #[prost(uint64, tag="5")]
+    pub memmap_threshold: u64,
     ///
     ///Maximum size (in KiloBytes) of vectors allowed for plain index.
     ///Default value based on <https://github.com/google-research/google-research/blob/master/scann/docs/algorithms.md>
     ///Note: 1Kb = 1 vector of size 256
-    #[prost(uint64, optional, tag="6")]
-    pub indexing_threshold: ::core::option::Option<u64>,
+    #[prost(uint64, tag="6")]
+    pub indexing_threshold: u64,
     ///
     ///Interval between forced flushes.
-    #[prost(uint64, optional, tag="7")]
-    pub flush_interval_sec: ::core::option::Option<u64>,
+    #[prost(uint64, tag="7")]
+    pub flush_interval_sec: u64,
     ///
     ///Max number of threads, which can be used for optimization. If 0 - `NUM_CPU - 1` will be used
-    #[prost(uint64, optional, tag="8")]
-    pub max_optimization_threads: ::core::option::Option<u64>,
+    #[prost(uint64, tag="8")]
+    pub max_optimization_threads: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateCollection {
@@ -168,23 +168,23 @@ pub struct CreateCollection {
     #[prost(message, optional, tag="6")]
     pub optimizers_config: ::core::option::Option<OptimizersConfigDiff>,
     /// Number of shards in the collection, default = 1
-    #[prost(uint32, optional, tag="7")]
-    pub shard_number: ::core::option::Option<u32>,
+    #[prost(uint32, tag="7")]
+    pub shard_number: u32,
     /// If true - point's payload will not be stored in memory
-    #[prost(bool, optional, tag="8")]
-    pub on_disk_payload: ::core::option::Option<bool>,
+    #[prost(bool, tag="8")]
+    pub on_disk_payload: bool,
     /// Wait timeout for operation commit in seconds, if not specified - default value will be supplied
-    #[prost(uint64, optional, tag="9")]
-    pub timeout: ::core::option::Option<u64>,
+    #[prost(uint64, tag="9")]
+    pub timeout: u64,
     /// Configuration for vectors
     #[prost(message, optional, tag="10")]
     pub vectors_config: ::core::option::Option<VectorsConfig>,
     /// Number of replicas of each shard that network tries to maintain, default = 1
-    #[prost(uint32, optional, tag="11")]
-    pub replication_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="11")]
+    pub replication_factor: u32,
     /// How many replicas should apply the operation for us to consider it successful, default = 1
-    #[prost(uint32, optional, tag="12")]
-    pub write_consistency_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="12")]
+    pub write_consistency_factor: u32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateCollection {
@@ -195,8 +195,8 @@ pub struct UpdateCollection {
     #[prost(message, optional, tag="2")]
     pub optimizers_config: ::core::option::Option<OptimizersConfigDiff>,
     /// Wait timeout for operation commit in seconds, if not specified - default value will be supplied
-    #[prost(uint64, optional, tag="3")]
-    pub timeout: ::core::option::Option<u64>,
+    #[prost(uint64, tag="3")]
+    pub timeout: u64,
     /// New configuration parameters for the collection
     #[prost(message, optional, tag="4")]
     pub params: ::core::option::Option<CollectionParamsDiff>,
@@ -207,8 +207,8 @@ pub struct DeleteCollection {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait timeout for operation commit in seconds, if not specified - default value will be supplied
-    #[prost(uint64, optional, tag="2")]
-    pub timeout: ::core::option::Option<u64>,
+    #[prost(uint64, tag="2")]
+    pub timeout: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionOperationResponse {
@@ -231,20 +231,20 @@ pub struct CollectionParams {
     #[prost(message, optional, tag="5")]
     pub vectors_config: ::core::option::Option<VectorsConfig>,
     /// Number of replicas of each shard that network tries to maintain
-    #[prost(uint32, optional, tag="6")]
-    pub replication_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="6")]
+    pub replication_factor: u32,
     /// How many replicas should apply the operation for us to consider it successful
-    #[prost(uint32, optional, tag="7")]
-    pub write_consistency_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="7")]
+    pub write_consistency_factor: u32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionParamsDiff {
     /// Number of replicas of each shard that network tries to maintain
-    #[prost(uint32, optional, tag="1")]
-    pub replication_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="1")]
+    pub replication_factor: u32,
     /// How many replicas should apply the operation for us to consider it successful
-    #[prost(uint32, optional, tag="2")]
-    pub write_consistency_factor: ::core::option::Option<u32>,
+    #[prost(uint32, tag="2")]
+    pub write_consistency_factor: u32,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionConfig {
@@ -267,14 +267,14 @@ pub struct TextIndexParams {
     #[prost(enumeration="TokenizerType", tag="1")]
     pub tokenizer: i32,
     /// If true - all tokens will be lowercased
-    #[prost(bool, optional, tag="2")]
-    pub lowercase: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub lowercase: bool,
     /// Minimal token length
-    #[prost(uint64, optional, tag="3")]
-    pub min_token_len: ::core::option::Option<u64>,
+    #[prost(uint64, tag="3")]
+    pub min_token_len: u64,
     /// Maximal token length
-    #[prost(uint64, optional, tag="4")]
-    pub max_token_len: ::core::option::Option<u64>,
+    #[prost(uint64, tag="4")]
+    pub max_token_len: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PayloadIndexParams {
@@ -299,8 +299,8 @@ pub struct PayloadSchemaInfo {
     #[prost(message, optional, tag="2")]
     pub params: ::core::option::Option<PayloadIndexParams>,
     /// Number of points indexed within this field indexed
-    #[prost(uint64, optional, tag="3")]
-    pub points: ::core::option::Option<u64>,
+    #[prost(uint64, tag="3")]
+    pub points: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CollectionInfo {
@@ -326,8 +326,8 @@ pub struct CollectionInfo {
     #[prost(uint64, tag="9")]
     pub points_count: u64,
     /// number of indexed vectors in the collection.
-    #[prost(uint64, optional, tag="10")]
-    pub indexed_vectors_count: ::core::option::Option<u64>,
+    #[prost(uint64, tag="10")]
+    pub indexed_vectors_count: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ChangeAliases {
@@ -335,8 +335,8 @@ pub struct ChangeAliases {
     #[prost(message, repeated, tag="1")]
     pub actions: ::prost::alloc::vec::Vec<AliasOperations>,
     /// Wait timeout for operation commit in seconds, if not specified - default value will be supplied
-    #[prost(uint64, optional, tag="2")]
-    pub timeout: ::core::option::Option<u64>,
+    #[prost(uint64, tag="2")]
+    pub timeout: u64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AliasOperations {
@@ -1073,8 +1073,8 @@ pub struct UpsertPoints {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     #[prost(message, repeated, tag="3")]
     pub points: ::prost::alloc::vec::Vec<PointStruct>,
 }
@@ -1084,8 +1084,8 @@ pub struct DeletePoints {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// Affected points
     #[prost(message, optional, tag="3")]
     pub points: ::core::option::Option<PointsSelector>,
@@ -1111,8 +1111,8 @@ pub struct SetPayloadPoints {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// New payload values
     #[prost(map="string, message", tag="3")]
     pub payload: ::std::collections::HashMap<::prost::alloc::string::String, Value>,
@@ -1126,8 +1126,8 @@ pub struct DeletePayloadPoints {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// List of keys to delete
     #[prost(string, repeated, tag="3")]
     pub keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -1141,8 +1141,8 @@ pub struct ClearPayloadPoints {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// Affected points
     #[prost(message, optional, tag="3")]
     pub points: ::core::option::Option<PointsSelector>,
@@ -1153,14 +1153,14 @@ pub struct CreateFieldIndexCollection {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// Field name to index
     #[prost(string, tag="3")]
     pub field_name: ::prost::alloc::string::String,
     /// Field type.
-    #[prost(enumeration="FieldType", optional, tag="4")]
-    pub field_type: ::core::option::Option<i32>,
+    #[prost(enumeration="FieldType", tag="4")]
+    pub field_type: i32,
     /// Payload index params.
     #[prost(message, optional, tag="5")]
     pub field_index_params: ::core::option::Option<PayloadIndexParams>,
@@ -1171,8 +1171,8 @@ pub struct DeleteFieldIndexCollection {
     #[prost(string, tag="1")]
     pub collection_name: ::prost::alloc::string::String,
     /// Wait until the changes have been applied?
-    #[prost(bool, optional, tag="2")]
-    pub wait: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub wait: bool,
     /// Field name to delete
     #[prost(string, tag="3")]
     pub field_name: ::prost::alloc::string::String,
@@ -1255,12 +1255,12 @@ pub struct SearchParams {
     ///
     ///Params relevant to HNSW index. Size of the beam in a beam-search.
     ///Larger the value - more accurate the result, more time required for search.
-    #[prost(uint64, optional, tag="1")]
-    pub hnsw_ef: ::core::option::Option<u64>,
+    #[prost(uint64, tag="1")]
+    pub hnsw_ef: u64,
     ///
     ///Search without approximation. If set to true, search may run long but with exact results.
-    #[prost(bool, optional, tag="2")]
-    pub exact: ::core::option::Option<bool>,
+    #[prost(bool, tag="2")]
+    pub exact: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SearchPoints {
@@ -1283,14 +1283,14 @@ pub struct SearchPoints {
     #[prost(message, optional, tag="7")]
     pub params: ::core::option::Option<SearchParams>,
     /// If provided - cut off results with worse scores
-    #[prost(float, optional, tag="8")]
-    pub score_threshold: ::core::option::Option<f32>,
+    #[prost(float, tag="8")]
+    pub score_threshold: f32,
     /// Offset of the result
-    #[prost(uint64, optional, tag="9")]
-    pub offset: ::core::option::Option<u64>,
+    #[prost(uint64, tag="9")]
+    pub offset: u64,
     /// Which vector to use for search, if not specified - use default vector
-    #[prost(string, optional, tag="10")]
-    pub vector_name: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag="10")]
+    pub vector_name: ::prost::alloc::string::String,
     /// Options for specifying which vectors to include into response
     #[prost(message, optional, tag="11")]
     pub with_vectors: ::core::option::Option<WithVectorsSelector>,
@@ -1314,8 +1314,8 @@ pub struct ScrollPoints {
     #[prost(message, optional, tag="3")]
     pub offset: ::core::option::Option<PointId>,
     /// Max number of result
-    #[prost(uint32, optional, tag="4")]
-    pub limit: ::core::option::Option<u32>,
+    #[prost(uint32, tag="4")]
+    pub limit: u32,
     /// Options for specifying which payload to include or not
     #[prost(message, optional, tag="6")]
     pub with_payload: ::core::option::Option<WithPayloadSelector>,
@@ -1347,14 +1347,14 @@ pub struct RecommendPoints {
     #[prost(message, optional, tag="8")]
     pub params: ::core::option::Option<SearchParams>,
     /// If provided - cut off results with worse scores
-    #[prost(float, optional, tag="9")]
-    pub score_threshold: ::core::option::Option<f32>,
+    #[prost(float, tag="9")]
+    pub score_threshold: f32,
     /// Offset of the result
-    #[prost(uint64, optional, tag="10")]
-    pub offset: ::core::option::Option<u64>,
+    #[prost(uint64, tag="10")]
+    pub offset: u64,
     /// Define which vector to use for recommendation, if not specified - default vector
-    #[prost(string, optional, tag="11")]
-    pub using: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag="11")]
+    pub using: ::prost::alloc::string::String,
     /// Options for specifying which vectors to include into response
     #[prost(message, optional, tag="12")]
     pub with_vectors: ::core::option::Option<WithVectorsSelector>,
@@ -1376,8 +1376,8 @@ pub struct CountPoints {
     #[prost(message, optional, tag="2")]
     pub filter: ::core::option::Option<Filter>,
     /// If `true` - return exact count, if `false` - return approximate count
-    #[prost(bool, optional, tag="3")]
-    pub exact: ::core::option::Option<bool>,
+    #[prost(bool, tag="3")]
+    pub exact: bool,
 }
 // ---------------------------------------------
 // ---------------- RPC Response ---------------
@@ -1586,14 +1586,14 @@ pub mod r#match {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Range {
-    #[prost(double, optional, tag="1")]
-    pub lt: ::core::option::Option<f64>,
-    #[prost(double, optional, tag="2")]
-    pub gt: ::core::option::Option<f64>,
-    #[prost(double, optional, tag="3")]
-    pub gte: ::core::option::Option<f64>,
-    #[prost(double, optional, tag="4")]
-    pub lte: ::core::option::Option<f64>,
+    #[prost(double, tag="1")]
+    pub lt: f64,
+    #[prost(double, tag="2")]
+    pub gt: f64,
+    #[prost(double, tag="3")]
+    pub gte: f64,
+    #[prost(double, tag="4")]
+    pub lte: f64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GeoBoundingBox {
@@ -1615,14 +1615,14 @@ pub struct GeoRadius {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValuesCount {
-    #[prost(uint64, optional, tag="1")]
-    pub lt: ::core::option::Option<u64>,
-    #[prost(uint64, optional, tag="2")]
-    pub gt: ::core::option::Option<u64>,
-    #[prost(uint64, optional, tag="3")]
-    pub gte: ::core::option::Option<u64>,
-    #[prost(uint64, optional, tag="4")]
-    pub lte: ::core::option::Option<u64>,
+    #[prost(uint64, tag="1")]
+    pub lt: u64,
+    #[prost(uint64, tag="2")]
+    pub gt: u64,
+    #[prost(uint64, tag="3")]
+    pub gte: u64,
+    #[prost(uint64, tag="4")]
+    pub lte: u64,
 }
 // ---------------------------------------------
 // -------------- Points Selector --------------

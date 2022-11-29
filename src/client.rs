@@ -314,7 +314,7 @@ impl QdrantClient {
                 .update(UpdateCollection {
                     collection_name: collection_name_ref.to_string(),
                     optimizers_config: Some(optimizers_config.clone()),
-                    timeout: None,
+                    timeout: 0,
                     params: None
                 })
                 .await?;
@@ -388,7 +388,7 @@ impl QdrantClient {
             let result = points_api
                 .upsert(UpsertPoints {
                     collection_name: collection_name_ref.to_string(),
-                    wait: Some(block),
+                    wait: block,
                     points: points.clone(),
                 })
                 .await?;
@@ -431,7 +431,7 @@ impl QdrantClient {
             let result = points_api
                 .set_payload(SetPayloadPoints {
                     collection_name: collection_name_ref.to_string(),
-                    wait: Some(block),
+                    wait: block,
                     payload: payload.0.clone(),
                     points: points.clone(),
                 })
@@ -475,7 +475,7 @@ impl QdrantClient {
             let result = points_api
                 .delete_payload(DeletePayloadPoints {
                     collection_name: collection_name_ref.to_string(),
-                    wait: Some(block),
+                    wait: block,
                     keys: keys.clone(),
                     points: points.clone(),
                 })
@@ -516,7 +516,7 @@ impl QdrantClient {
             let result = points_api
                 .clear_payload(ClearPayloadPoints {
                     collection_name: collection_name_ref.to_string(),
-                    wait: Some(block),
+                    wait: block,
                     points: points_selector.cloned(),
                 })
                 .await?;
@@ -602,7 +602,7 @@ impl QdrantClient {
             let result = points_api
                 .delete(DeletePoints {
                     collection_name: collection_name_ref.to_string(),
-                    wait: Some(blocking),
+                    wait: blocking,
                     points: Some(points.clone()),
                 })
                 .await?;
@@ -657,9 +657,9 @@ impl QdrantClient {
         Ok(self.with_points_client(|mut client| async move {
             let result = client.create_field_index(CreateFieldIndexCollection {
                 collection_name: collection_name_ref.to_string(),
-                wait: Some(wait),
+                wait: wait,
                 field_name: field_name_ref.to_string(),
-                field_type: Some(field_type.into()),
+                field_type: field_type.into(),
                 field_index_params: field_index_params.cloned(),
             }).await?;
             Ok(result.into_inner())
@@ -701,7 +701,7 @@ impl QdrantClient {
         Ok(self.with_points_client(|mut client| async move {
             let result = client.delete_field_index(DeleteFieldIndexCollection {
                 collection_name: collection_name_ref.to_string(),
-                wait: Some(wait),
+                wait: wait,
                 field_name: field_name_ref.to_string(),
             }).await?;
             Ok(result.into_inner())
